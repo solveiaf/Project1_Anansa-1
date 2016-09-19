@@ -1,27 +1,36 @@
-#include <QCoreApplication>
-#include <cmath>
-
+#include <iostream>
 using namespace std;
 
 int main()
 {
-    int m,k,j, i,  row = 3, col = 3;
-    double w[3] = {0.0,1.0,0.5};
-    double a[3][3] = {  {-1.0, 1.0, -4.0},
-                         {2.0, 2.0, 0.0},
-                         {3.0, 3.0, 2.0}
-                      };
+    //Defining variables
+    int n;
+    double a,b;
+    cout << "Dimension of matrix:";
+    cin >> n;
+    cout << "Diagonal element:";
+    cin >> a;
+    cout << "Non-diagonal element:";
+    cin >> b;
 
-    //cout << a[1][3] << endl;
-    for (m = 0; m < row; m++){
-        for (j = m+1; j < row; j++){
-            for (k = j; k < row; k++){
+    double veca[n], vecx[n]; vecu[n];
+    vec[0] = a;
+    double temp = b**2;
 
-                a[j][k] = a[j][k] - (a[j][m]*a[m][k])/a[m][m];
+    //LU-decomposition
+    for (int k=1; k<n; k++) {
+        veca[k] = veca[k-1] - temp/vec[k-1];
+        vecu[k] = vecu[k] - (b*vecu[k-1])/veca[k-1];
+    }
 
+    vecx[n] = veca[n];
+    temp = 0;
 
-            }
-            w[j] = w[j]- (a[j][m]*w[m])/a[m][m];
-        }
+    //backward substitution
+    for (int k=n-1; k >= 0; k--) {
+        temp += b*vecx[k+1];
+        vecx[k] = 1.0/veca[k]*(vecu[k]-temp);
     }
 }
+
+
