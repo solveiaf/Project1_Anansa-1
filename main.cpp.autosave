@@ -41,7 +41,7 @@ int main()
     a = 2;
     b = -1;
 
-    double veca[n], vecx[n+1]; //vecu[n];
+    double veca[n], vecx[n+2]; //vecu[n];
     veca[0] = a;
     double temp = b*b;
 
@@ -57,7 +57,7 @@ int main()
     temp = 0;
 
     //backward substitution
-    for (int k=n-1; k >= 0; k--) {
+    for (int k=n-1; k > 0; k--) {
         temp += b*vecx[k+1];
         vecx[k] = (1.0/veca[k])*(vecx[k]-temp);
         //cout << k << endl;
