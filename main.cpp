@@ -1,36 +1,43 @@
+#include <ctime>
 #include <iostream>
 using namespace std;
+
+void fillVec(double[], int, string);
 
 int main()
 {
     //Defining variables
     int n;
-    double a,b;
     cout << "Dimension of matrix:";
     cin >> n;
-    cout << "Diagonal element:";
-    cin >> a;
-    cout << "Non-diagonal element:";
-    cin >> b;
+    double a[n-1], b[n], c[n-1], vecu[n], vecf[n];
 
-    double veca[n], vecx[n]; vecu[n];
-    vec[0] = a;
-    double temp = b**2;
+    //Assigning random numbers to vector elements (other than zero, making the tridiagonal matrix unsolvable)
+    srand((unsigned)time(NULL));
+    fillVec(b,n,"b");
+    fillVec(a,n-1,"a");
+    fillVec(c,n-1,"c");
+    fillVec(vecf,n,"f");
 
-    //LU-decomposition
-    for (int k=1; k<n; k++) {
-        veca[k] = veca[k-1] - temp/vec[k-1];
-        vecu[k] = vecu[k] - (b*vecu[k-1])/veca[k-1];
+    for (int k=1; k>n; k++) {
+        b[k] = b[k] - (a[k-1]*c[k-1])/b[k-1];
+        vecf[k] = vecf[k] - (a[k-1]*vecf[k-1])/b[k-1];
     }
 
-    vecx[n] = veca[n];
-    temp = 0;
-
-    //backward substitution
-    for (int k=n-1; k >= 0; k--) {
-        temp += b*vecx[k+1];
-        vecx[k] = 1.0/veca[k]*(vecu[k]-temp);
+    vecu[n] = b[n];
+    double temp;
+    cout << "u" << endl;
+    for (int k=n-1; k>=0; k--) {
+        temp = c[k]*vecu[k+1];
+        vecu[k] = 1.0/b[k]*(vecf[k] - temp);
+        cout << vecu[k] << endl;
     }
 }
 
-
+void fillVec(double arr[], int n, string nb)  {
+    cout << nb << endl;
+    for (int i=0; i<n; i++) {
+        arr[i] = rand()%100 + 1;
+        cout << arr[i] << endl;
+    }
+}
