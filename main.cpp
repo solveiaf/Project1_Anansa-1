@@ -19,11 +19,13 @@ int main()
     fillVec(c,n-1,"c");
     fillVec(vecf,n,"f");
 
-    for (int k=1; k>n; k++) {
+    //Forwards substitution
+    for (int k=1; k<=n; k++) {
         b[k] = b[k] - (a[k-1]*c[k-1])/b[k-1];
         vecf[k] = vecf[k] - (a[k-1]*vecf[k-1])/b[k-1];
     }
 
+    //Backwards substitution
     vecu[n] = b[n];
     double temp;
     cout << "u" << endl;
